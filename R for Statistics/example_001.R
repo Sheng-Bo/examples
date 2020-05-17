@@ -1,6 +1,6 @@
 # ===== Load from Excel XLSX =====
 library(readxl)
-survey_data_001_xlsx <- read_excel("GitHub/tutorial_examples/R for Statistics/survey_data_001.xlsx", 
+survey_data_001_xlsx <- read_excel("~/GitHub/tutorial_examples/R for Statistics/survey_data_001.xlsx", 
   col_types = c(
     "text", 
     "numeric", 
@@ -15,6 +15,7 @@ survey_data_001_xlsx <- read_excel("GitHub/tutorial_examples/R for Statistics/su
     "numeric"
   )
 )
+
 
 # ===== Load from CSV =====
 library(readr)

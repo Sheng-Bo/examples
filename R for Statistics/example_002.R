@@ -1,8 +1,6 @@
-library(dplyr)
-
 # ===== Load from Excel XLSX =====
 library(readxl)
-survey_data_002_xlsx <- read_excel("GitHub/tutorial_examples/R for Statistics/survey_data_002.xlsx", 
+survey_data_002_xlsx <- read_excel("~/GitHub/tutorial_examples/R for Statistics/survey_data_002.xlsx", 
    col_types = c(
      "text", 
      "numeric", 
@@ -31,16 +29,19 @@ summary(survey_data_002_xlsx$Q9)
 summary(survey_data_002_xlsx$Q10)
 
 # ===== Histogram of Variables =====
-hist(no_missing$Q1)
-hist(no_missing$Q2)
-hist(no_missing$Q3)
-hist(no_missing$Q4)
-hist(no_missing$Q5)
-hist(no_missing$Q6)
-hist(no_missing$Q7)
-hist(no_missing$Q8)
-hist(no_missing$Q9)
-hist(no_missing$Q10)
+hist(survey_data_002_xlsx$Q1)
+hist(survey_data_002_xlsx$Q2)
+hist(survey_data_002_xlsx$Q3)
+hist(survey_data_002_xlsx$Q4)
+hist(survey_data_002_xlsx$Q5)
+hist(survey_data_002_xlsx$Q6)
+hist(survey_data_002_xlsx$Q7)
+hist(survey_data_002_xlsx$Q8)
+hist(survey_data_002_xlsx$Q9)
+hist(survey_data_002_xlsx$Q10)
+
+barplot(table(survey_data_002_xlsx$Q2))
+
 
 # ===== Show Missing Values =====
 is.na(survey_data_002_xlsx)
@@ -107,5 +108,5 @@ barplot(table(no_missing_outlier$mean))
 par(new=TRUE)   
 plot(density(no_missing_outlier$mean), col=4, yaxt="n", xaxt="n",
      bty='n', xlab="Value", ylab="Frequency", main='Histogram')
-
+  
 
