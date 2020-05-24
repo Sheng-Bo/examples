@@ -41,7 +41,8 @@ hist(survey_data_002_xlsx$Q9)
 hist(survey_data_002_xlsx$Q10)
 
 barplot(table(survey_data_002_xlsx$Q2))
-
+?barplot
+?table
 
 # ===== Show Missing Values =====
 is.na(survey_data_002_xlsx)
@@ -74,7 +75,8 @@ no_missing_outlier <- no_missing_outlier [no_missing_outlier$Q1 != 14,]
 
 
 # ===== Compute Mean for Each Student =====
-no_missing_outlier$mean <- (
+no_missing_outlier$mean <- 
+(
   no_missing_outlier$Q1 +
   no_missing_outlier$Q2 +
   no_missing_outlier$Q3 +
@@ -86,6 +88,8 @@ no_missing_outlier$mean <- (
   no_missing_outlier$Q9 +
   no_missing_outlier$Q10 
 ) / 10
+
+
 
 # ===== Histogram of Variables =====
 hist(no_missing_outlier$Q1)
@@ -106,7 +110,7 @@ barplot(table(no_missing_outlier$mean))
 
 # ===== Curve on Histogram =====
 par(new=TRUE)   
-plot(density(no_missing_outlier$mean), col=4, yaxt="n", xaxt="n",
+plot(density(no_missing_outlier$Q1), col=4, yaxt="n", xaxt="n",
      bty='n', xlab="Value", ylab="Frequency", main='Histogram')
   
 
