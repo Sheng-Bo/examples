@@ -34,6 +34,10 @@ survey_data_003_xlsx <- na.omit(survey_data_003_xlsx)
 
 library(dplyr)
 
+
+xxxx <- survey_data_003_xlsx %>% 
+  mutate(sum = colSums(.[1:5]))
+
 survey_data_003_xlsx <- survey_data_003_xlsx %>% 
   # filter(Gender == "2") %>% 
   # select(Age, Gender) %>% 
@@ -44,12 +48,18 @@ survey_data_003_xlsx <- survey_data_003_xlsx %>%
 
 # survey_data_003_xlsx$GroupID <- group_indices(survey_data_003_xlsx)
 
-  
-sum_table1 <- survey_data_003_xlsx %>% 
+
+# ===== Another Way to Get Mean =====
+survey_data_003_xlsx %>% select(Q1:Q5, Q8:Q10) %>% rowSums()/10 -> survey_data_003_xlsx$Mean
+
+
+# ===== Get Mean and N of Two Variables  =====
+mean_table1 <- survey_data_003_xlsx %>% 
   ungroup() %>% 
   summarise(Q1Mean = mean(Q1), Q2Mean = mean(Q2), n = n())
 
 
+# ===== Get Mean, Median, Sum, and N of One Variable  =====
 sum_table2 <- survey_data_003_xlsx %>%
   ungroup() %>% 
   summarise(
@@ -59,11 +69,10 @@ sum_table2 <- survey_data_003_xlsx %>%
     Q1N      = n()
   )
 
+
 # ===== Find Mode =====
 library(modeest)
 survey_data_003_xlsx$Q1Mode <- mlv(survey_data_003_xlsx$Q1, method = "mfv")
 
 
-# Testing of Assumptions (CORR)
-# Data Viz
-# T-Test 
+
