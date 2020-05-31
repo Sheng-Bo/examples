@@ -18,6 +18,10 @@
 
             $messages = $db->query("SELECT * FROM guestbook")->fetchAll();
             
+            //print_r($messages);
+                        
+            echo "留言筆數：".count($messages)."<br>";
+
             foreach ($messages as $message) {
                 echo "大名：".$message['name']."<br>";
                 echo "留言：".$message['message']."<br>";
