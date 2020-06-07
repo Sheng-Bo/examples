@@ -29,6 +29,8 @@
                 echo "<hr>";
             }
 
+            print_r($_REQUEST);
+
             // 如果接收到表單送出的資料，存入資料庫
             if (isset($_REQUEST['submit'])) {
                 $name    = $_REQUEST['name'];
@@ -38,7 +40,6 @@
                 $sql->execute([$name, $message]);
 
                 header('Location: '.$_SERVER['PHP_SELF']);
-                //print_r($_REQUEST);
             }
             
 
