@@ -35,21 +35,27 @@ survey_data_003_xlsx <- na.omit(survey_data_003_xlsx)
 library(dplyr)
 
 df1 <- survey_data_003_xlsx %>% 
-  # filter(Gender == "2") %>% 
-  # select(Age, Gender) %>% 
-  mutate(Mean2 = (Q1 + Q2 + Q3 + Q4 + Q5 + Q6 + Q7 + Q8 + Q9 + Q10) / 10) %>% 
-  # arrange(Gender, Age, StudentID) %>% 
+  #filter(Gender == "2") %>% 
+  #select(Age, Gender) %>% 
+  #mutate(M = (Q1 + Q2 + Q3 + Q4 + Q5 + Q6 + Q7 + Q8 + Q9 + Q10) / 10) %>% 
+  arrange(Age, Gender) %>% 
   group_by(Age, Gender) %>% 
   mutate (GroupID = group_indices()) %>% 
-  arrange(GroupID)
+  arrange(GroupID) %>% 
+  ungroup() %>% 
+  mutate (GroupID2 = group_indices())
 
 df1$GroupID1 <- group_indices(df1)
 
 
 # ===== Another Way to Get Mean =====
 df1 %>% 
+  select(Q1:Q4, Q6:Q10) %>% 
+  rowSums()/10 -> df1$NewMean 
+  
+df1$NewMean <- df1 %>% 
   select(Q1:Q10) %>% 
-  rowSums()/10 -> df1$NewMean
+  rowSums()/10 
 
 
 # ===== Get Mean and N of Two Variables  =====
@@ -74,5 +80,7 @@ library(modeest)
 survey_data_003_xlsx$Q1Mode <- mlv(survey_data_003_xlsx$Q1, method = "mfv")
 survey_data_003_xlsx$Q3Mode <- mlv(survey_data_003_xlsx$Q3, method = "mfv")
 
-
+survey_data_003_xlsx <- survey_data_003_xlsx %>% 
+  arrange(Q1)
+  
 
