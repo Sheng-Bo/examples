@@ -82,5 +82,14 @@ survey_data_003_xlsx$Q3Mode <- mlv(survey_data_003_xlsx$Q3, method = "mfv")
 
 survey_data_003_xlsx <- survey_data_003_xlsx %>% 
   arrange(Q1)
+
+
+
+# ===== Save to CSV =====
+survey_data_003_xlsx$Q1Mode <- NULL
+survey_data_003_xlsx$Q3Mode <- NULL
+
+write.table(survey_data_003_xlsx,'~/GitHub/tutorial_examples/R for Statistics/survey_data_004.csv', 
+            sep=",", row.names=FALSE, quote=TRUE)
   
 
