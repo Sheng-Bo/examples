@@ -16,7 +16,9 @@
             $db = new PDO("mysql:host=$servername;dbname=guestbook", $username, $password);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $messages = $db->query("SELECT * FROM guestbook")->fetchAll();
+            $messages = $db
+                ->query("SELECT * FROM guestbook")
+                ->fetchAll();
             
             //print_r($messages);
                         
@@ -29,7 +31,7 @@
                 echo "<hr>";
             }
 
-            print_r($_REQUEST);
+            // print_r($_REQUEST);
 
             // 如果接收到表單送出的資料，存入資料庫
             if (isset($_REQUEST['submit'])) {
