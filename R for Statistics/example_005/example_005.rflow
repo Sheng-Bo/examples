@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rflow [
+<!ENTITY lt "&#38;#60;">
+<!ENTITY gt "&#62;">
+<!ENTITY amp "&#38;#38;">
+<!ENTITY apos "&#39;">
+<!ENTITY quot "&#34;">
+]>
+<rflow>
+	<graph version="0.8" width="1119" height="410" locationtype="a" offsetx="0" offsety="0">
+		<setting>
+			<entry key="USE_GRID">true</entry>
+			<entry key="FOLDER">example_005</entry>
+			<entry key="GRID_DISTANCE2">10</entry>
+		</setting>
+<properties>
+<v key="packages"/>
+</properties>
+		<node id="0" date="1592743350929" uid="90a3c749ba212151" x="470" y="130">
+			<command># Keep Numbers Only
+
+# ===== Subset the Data Frame ===== 
+survey_data_004_cor &lt;- subset( survey_data_004, select = -c(StudentID))
+
+
+</command>
+			<property/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<node id="1" date="1592743707057" uid="b624e5768c44681b" x="370" y="310">
+			<command># Matrix
+
+# http://www.sthda.com/english/wiki/scatter-plot-matrices-r-base-graphs
+pairs(survey_data_004_cor, main = &quot;Pairs matrix&quot;, pch = 19, lower.panel = NULL)</command>
+			<property/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<node id="2" date="1592743837811" uid="e6b8148bb869674a" x="560" y="130">
+			<command># Create Table
+
+# ===== Fix the Repeated &lt;th Issue by ztable ===== 
+table_html &lt;- capture.output(
+	corstars(as.matrix(survey_data_004_cor), result=&quot;html&quot;)
+)
+
+table_html &lt;- gsub(&quot;&lt;th &lt;th&quot;, &quot;&lt;th&quot;, table_html)
+
+
+# ===== Save the Table in HTML and Open It in Browser ===== 
+fileConn&lt;-file(paste0(workpath, &quot;table.html&quot;))
+writeLines(table_html, fileConn)
+close(fileConn)
+
+browseURL(paste0(workpath, &quot;table.html&quot;)) 
+</command>
+			<property/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<node id="3" date="1592743628472" uid="cff33d337f293b02" x="370" y="220">
+			<command># Scatter Plot
+# https://www.statmethods.net/graphs/scatterplot.html
+# Tilde Operater Means Y~X (Dependent Variable Y is Predicted by Independent Variable X)
+plot(survey_data_004_cor$Q1, survey_data_004_cor$Q2, main=&quot;Scatterplot Example&quot;, xlab=&quot;X&quot;, ylab=&quot;Y&quot;, pch=19)
+abline(lm(survey_data_004_cor$Q2~survey_data_004_cor$Q1), col=&quot;red&quot;) # regression line (y~x)
+
+</command>
+			<property/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<node id="4" date="1592744059823" uid="89d7e03c8368a42b" x="680" y="310">
+			<command># Corrplots
+
+# http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software
+# https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html
+# http://www.sthda.com/english/wiki/visualize-correlation-matrix-using-correlogram
+library(corrplot)
+
+# corrplot(cor$r, type = &quot;upper&quot;, tl.col = &quot;black&quot;, tl.srt = 45)
+corrplot(cor$r, type = &quot;upper&quot;, tl.col = &quot;black&quot;, tl.srt = 45, method = &quot;ellipse&quot;)
+# corrplot(cor$r, type = &quot;upper&quot;, p.mat = cor$P, sig.level = 0.05, insig = &quot;blank&quot;,   tl.col = &quot;black&quot;, tl.srt = 45)
+# corrplot(cor$r, type = &quot;upper&quot;, p.mat = cor$P, sig.level = 0.05, insig = &quot;p-value&quot;, tl.col = &quot;black&quot;, tl.srt = 45)
+# corrplot(cor$r, type = &quot;upper&quot;, p.mat = cor$P, sig.level = 0.05, insig = &quot;pch&quot;,     tl.col = &quot;black&quot;, tl.srt = 45)
+# corrplot(cor$r, type = &quot;upper&quot;, p.mat = cor$P, sig.level = 0.00, insig = &quot;p-value&quot;, tl.col = &quot;black&quot;, tl.srt = 45, metho = &quot;ellipse&quot;)
+
+</command>
+			<property/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<node id="5" date="1592742592059" uid="6aed89c13ebc0da9" x="170" y="130">
+			<command># Start
+
+
+
+# ===== Define Work Path =====
+workpath &lt;- &quot;C:\\xampp\\htdocs\\tutorial_examples\\R for Statistics\\&quot;
+
+</command>
+			<property shape="STAR"/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<node id="6" date="1592743750311" uid="fc3289954221a7e6" x="470" y="310">
+			<command># Matrix
+
+library(&quot;PerformanceAnalytics&quot;)
+chart.Correlation(survey_data_004_cor, histogram=TRUE, pch=19)
+</command>
+			<property/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<node id="7" date="1592744003751" uid="963b8813f052e80c" x="570" y="310">
+			<command># Get Corr Results
+# https://www.statmethods.net/stats/correlations.html
+library(Hmisc)
+cor &lt;- rcorr(as.matrix(survey_data_004_cor), type=&quot;pearson&quot;) # type can be pearson or spearman
+</command>
+			<property/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<node id="8" date="1592743237905" uid="61feeb67b7d7fa46" x="270" y="130">
+			<command># Load Data
+library(readr)
+
+# ===== Load the Cleaned Dataset to Data Frame ===== 
+survey_data_004 &lt;- read_csv(paste0(workpath, &quot;survey_data_004.csv&quot;), col_types = cols(
+	StudentID = col_character(),
+	Age       = col_integer(), 
+	Gender    = col_integer(),
+	Q1        = col_integer(), 
+	Q2        = col_integer(), 
+	Q3        = col_integer(), 
+	Q4        = col_integer(), 
+	Q5        = col_integer(), 
+	Q6        = col_integer(), 
+	Q7        = col_integer(), 
+	Q8        = col_integer(), 
+	Q9        = col_integer(), 
+	Q10       = col_integer()
+))</command>
+			<property/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<node id="9" date="1592743125072" uid="cff6591f92ca5585" x="370" y="130">
+			<command># Load Table Function
+
+# ===== Load the Function to Create a Correlation Table with Stars ===== 
+# x is a matrix containing the data
+# method : correlation method. &quot;pearson&quot;&quot; or &quot;spearman&quot;&quot; is supported
+# removeTriangle : remove upper or lower triangle
+# results :  if &quot;html&quot; or &quot;latex&quot;
+# the results will be displayed in html or latex format
+# Credit: http://www.sthda.com/english/wiki/elegant-correlation-table-using-xtable-r-package
+# Modified: Sheng-Bo Chen
+corstars &lt;-function(x, method=c(&quot;pearson&quot;, &quot;spearman&quot;), removeTriangle=c(&quot;upper&quot;, &quot;lower&quot;),
+	result=c(&quot;none&quot;, &quot;html&quot;, &quot;latex&quot;)){
+	#Compute correlation matrix
+	require(Hmisc)
+	x &lt;- as.matrix(x)
+	correlation_matrix&lt;-rcorr(x, type=method[1])
+	R &lt;- correlation_matrix$r # Matrix of correlation coeficients
+	p &lt;- correlation_matrix$P # Matrix of p-value 
+	
+	## Define notions for significance levels; spacing is important.
+	mystars &lt;- ifelse(p &lt; .0001, &quot;****&quot;, ifelse(p &lt; .001, &quot;*** &quot;, ifelse(p &lt; .01, &quot;**  &quot;, ifelse(p &lt; .05, &quot;*   &quot;, &quot;    &quot;))))
+	
+	## trunctuate the correlation matrix to two decimal
+	R &lt;- format(round(cbind(rep(-1.11, ncol(x)), R), 2))[,-1]
+	
+	## build a new matrix that includes the correlations with their apropriate stars
+	Rnew &lt;- matrix(paste(R, mystars, sep=&quot;&quot;), ncol=ncol(x))
+	diag(Rnew) &lt;- paste(diag(R), &quot; &quot;, sep=&quot;&quot;)
+	rownames(Rnew) &lt;- colnames(x)
+	colnames(Rnew) &lt;- paste(colnames(x), &quot;&quot;, sep=&quot;&quot;)
+	
+	## remove upper triangle of correlation matrix
+	if(removeTriangle[1]==&quot;upper&quot;){
+		Rnew &lt;- as.matrix(Rnew)
+		Rnew[upper.tri(Rnew, diag = TRUE)] &lt;- &quot;&quot;
+		Rnew &lt;- as.data.frame(Rnew)
+	}
+	
+	## remove lower triangle of correlation matrix
+	else if(removeTriangle[1]==&quot;lower&quot;){
+		Rnew &lt;- as.matrix(Rnew)
+		Rnew[lower.tri(Rnew, diag = TRUE)] &lt;- &quot;&quot;
+		Rnew &lt;- as.data.frame(Rnew)
+	}
+	
+	## remove last column and return the correlation matrix
+	Rnew &lt;- cbind(Rnew[1:length(Rnew)-1])
+	require(ztable)
+	if (result[1]==&quot;none&quot;) return(Rnew)
+	else{
+		if(result[1]==&quot;html&quot;) ztable(Rnew, type=&quot;html&quot;)
+		else ztable(Rnew)
+	}
+} </command>
+			<property/>
+			<option type="com.ef_prime.rflow.node.base.FreeNodeModel"/>
+		</node>
+		<edge from="8" to="1"/>
+		<edge from="0" to="7"/>
+		<edge from="8" to="9"/>
+		<edge from="8" to="3"/>
+		<edge from="0" to="6"/>
+		<edge from="0" to="2"/>
+		<edge from="5" to="8"/>
+		<edge from="7" to="4"/>
+		<edge from="9" to="0"/>
+	</graph>
+	<task>
+		<taskgroup>
+			<taskproperty/>
+		</taskgroup>
+	</task>
+</rflow>
