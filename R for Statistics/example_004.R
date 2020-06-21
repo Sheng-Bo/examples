@@ -1,5 +1,5 @@
 # ===== Define Work Path ===== 
-workpath <- "~/GitHub/tutorial_examples/R for Statistics/"
+workpath <- "C:\\xampp\\htdocs\\tutorial_examples\\R for Statistics\\"
 
 
 # ===== Load the Function to Create a Correlation Table with Stars ===== 
@@ -121,7 +121,7 @@ cor <- rcorr(as.matrix(survey_data_004_cor), type="pearson") # type can be pears
 # http://www.sthda.com/english/wiki/visualize-correlation-matrix-using-correlogram
 library(corrplot)
 corrplot(cor$r, type = "upper", tl.col = "black", tl.srt = 45)
-corrplot(cor$r, type = "upper", tl.col = "black", tl.srt = 45, metho = "ellipse")
+corrplot(cor$r, type = "upper", tl.col = "black", tl.srt = 45, method = "ellipse")
 corrplot(cor$r, type = "upper", p.mat = cor$P, sig.level = 0.05, insig = "blank",   tl.col = "black", tl.srt = 45)
 corrplot(cor$r, type = "upper", p.mat = cor$P, sig.level = 0.05, insig = "p-value", tl.col = "black", tl.srt = 45)
 corrplot(cor$r, type = "upper", p.mat = cor$P, sig.level = 0.05, insig = "pch",     tl.col = "black", tl.srt = 45)
